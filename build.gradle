@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '4.0.2'
+}
+
+group 'com.starling.assignment'
+
+shadowJar {
+    baseName = "savings-goals"
+    classifier = null
+    version = null
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: "application"
+apply plugin: "com.github.johnrengelman.shadow"
+
+mainClassName = "com.starling.assignment.Main"
+
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.0.0-alpha01'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okio:okio:2.2.2'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.10.0'
+    testCompile "org.mockito:mockito-core:2.+"
+}
