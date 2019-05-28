@@ -3,6 +3,7 @@ package com.starling.assignment.service;
 import com.starling.assignment.model.Account;
 import com.starling.assignment.model.Amount;
 import com.starling.assignment.model.RoundUp;
+import com.starling.assignment.model.SavingsGoal;
 import com.starling.assignment.model.Transaction;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,6 +81,27 @@ public class RoundUpServiceTest {
 
         assertThat(roundUpAmount).isNotNull();
         assertThat(roundUpAmount.getMinorUnits()).isEqualTo(158L);
+    }
+
+    @Test
+    public void select_savings_goals_with_enough_target_for_round_up_amount() {
+
+        SavingsGoal goal1 = new SavingsGoal("1", "Goal 1",
+            new Amount("GBP", 10000), new Amount("GBP", 9000));
+        SavingsGoal goal2 = new SavingsGoal("2", "Goal 2",
+            new Amount("GBP", 20000), new Amount("GBP", 11000));
+        SavingsGoal goal3 = new SavingsGoal("3", "Goal 3",
+            new Amount("GBP", 30000), new Amount("GBP", 27000));
+        List<SavingsGoal> savingsGoals = Arrays.asList(goal1, goal2, goal3);
+
+        when(bankingService.getSavingsGoals(anyString())).thenReturn(savingsGoals);
+
+        List<SavingsGoal> result = roundUpService.fetchSavingsGoalsForAmount(
+            "1", new Amount("GBP", 3000));
+
+        assertThat(result).isNotNull();
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result).contains(goal2, goal3);
     }
 
     @Test

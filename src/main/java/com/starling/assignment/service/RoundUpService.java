@@ -3,6 +3,7 @@ package com.starling.assignment.service;
 import com.starling.assignment.model.Account;
 import com.starling.assignment.model.Amount;
 import com.starling.assignment.model.RoundUp;
+import com.starling.assignment.model.SavingsGoal;
 import com.starling.assignment.model.Transaction;
 import com.starling.assignment.model.Transaction.Direction;
 import com.starling.assignment.model.Transaction.Status;
@@ -84,6 +85,17 @@ public class RoundUpService {
         long transactionsRoundUp = calculateRounding(transactions, outgoingExternal, outgoingRoundUp);
 
         return new Amount("GBP", transactionsRoundUp);
+    }
+
+    public List<SavingsGoal> fetchSavingsGoalsForAmount(String accountUid, Amount amount) {
+
+        if (amount == null || amount.getMinorUnits() == 0) return new ArrayList<>();
+
+        List<SavingsGoal> savingsGoals = bankingService.getSavingsGoals(accountUid);
+
+        return savingsGoals.stream()
+            .filter(goal -> (goal.getTarget().getMinorUnits() - goal.getTotalSaved().getMinorUnits())
+                >= amount.getMinorUnits()).collect(Collectors.toList());
     }
 
     /**

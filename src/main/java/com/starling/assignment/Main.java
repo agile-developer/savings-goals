@@ -83,7 +83,7 @@ public class Main {
             System.exit(0);
         }
 
-        List<SavingsGoal> savingsGoals = bankingService.getSavingsGoals(accountUid);
+        List<SavingsGoal> savingsGoals = roundUpService.fetchSavingsGoalsForAmount(accountUid, roundUpAmount);
 
         if (savingsGoals.isEmpty()) {
             System.out.println("No svaings-goals found for this account. Program will terminate.");

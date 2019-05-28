@@ -3,9 +3,9 @@ This program is implemented as a simple command-line client to Starling's API. I
 an access-token and a number of days to go back, from today, to gather transactions and calculate a round-up value.
 It presents the user with some details of the account (UID, current balance) and also the round-up value calculated for
 all **eligible** transactions, for the given time-period. The user is presented with existing savings-goals associated
-with their account and given the option to choose one, to transfer the round-up amount to. If the transfer is successful,
-the program prints the updated savings-goal and exits. If the user chooses a value other than the options displayed, the
-program prints an appropriate message and also exits in this case.
+with their account, that have enough of a target, and given the option to choose one, to transfer the round-up amount to.
+If the transfer is successful, the program prints the updated savings-goal and exits. If the user chooses a value other 
+than the options displayed, the program prints an appropriate message and also exits in this case.
 
 Basically, a single interaction of the program is good for one potential round-up and transfer.
 
@@ -27,6 +27,4 @@ This will create an executable `savings-goals.jar` file in the `build/libs` dire
 ##### Improvements:
 * Error/Exception handling is pretty basic and can be made more robust.
 * By persisting round-up details, duplicate runs of the same transactions can be prevented.
-* Currently, all savings-goals for an account are displayed. It would be better to only select goals with enough of a
-target remaining.
 * Allow creation of new savings-goals from the program.
